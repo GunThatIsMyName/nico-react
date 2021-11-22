@@ -1,10 +1,17 @@
-import './App.css';
+import styled from 'styled-components';
+
+const Box = styled.section`
+  background-color:${props=>props.theme.backgroundColor};
+  color:${props=>props.theme.textColor};
+`;
+
+
 
 function App() {
   return (
-    <div className="App">
+    <Box className="App">
       <h1>hello</h1>
-    </div>
+    </Box>
   );
 }
 
