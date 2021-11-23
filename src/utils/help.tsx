@@ -1,0 +1,1 @@
+export const coinUrl ="https://api.coinpaprika.com/v1/coins";
