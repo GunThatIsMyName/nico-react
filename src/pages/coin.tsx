@@ -1,49 +1,44 @@
 import { useEffect, useState } from "react";
+import { useQuery } from "react-query";
 import { useLocation, useParams } from "react-router";
 import styled from "styled-components";
 import CoinDetail from "../components/coindetail";
 import Loader from "../components/loader";
 import { IcoinThicker, IInfoData } from "../interface/coinFace";
-import { coinPriceUrl, coinThickerUrl } from "../utils/help";
+import { getCoinInfo } from "../utils/api";
 
-const Coin=()=>{
-    const [loading,setLoading]=useState(true);
-    const {coinId} = useParams();
-    const {state} = useLocation();
+const Coin = () => {
+  const { coinId } = useParams();
+  const { state } = useLocation();
+  
+  const {
+    isLoading: infoLoading,isError: infoError,data: infoData,
+  } = useQuery<IInfoData>(["info", coinId], () => getCoinInfo(coinId));
 
-    const [coinInfo,setInfo]=useState<IInfoData>();
-    const [coinPrice,setPrice]=useState<IcoinThicker>();
+  const {
+    isLoading: thickerLoading,isError: thickerError,data: thickerData,
+  } = useQuery<IcoinThicker>(["thicker", coinId], () => getCoinInfo(coinId));
 
-    const getCoinInfo=async()=>{
-        const response =await fetch(`${coinPriceUrl}${coinId}`);
-        const data=await response.json();
-        setInfo(data);
-    }
-    const getCoinPrice=async()=>{
-        const response =await fetch(`${coinThickerUrl}${coinId}`);
-        const data=await response.json();
-        setPrice(data);
-    }
-    useEffect(()=>{
-        getCoinInfo();
-        getCoinPrice();
-        setLoading(false)
-        // eslint-disable-next-line
-    },[coinId])
+  let Loading = infoLoading || thickerLoading;
+  let Error = infoError || thickerError;
 
-    return (
-        <Container>
-          <header>
-            <h1>Coin :{state?state:coinId}</h1>
-          </header>
-          {loading ? (
-            <Loader />
-          ) : 
-              coinInfo && coinPrice && <CoinDetail coinInfo={coinInfo} coinPrice={coinPrice} />
-          }
-        </Container>
-      );
-}
+  return (
+    <Container>
+      <header>
+        <h1>Coin :{state ? state : coinId}</h1>
+      </header>
+      {Loading ? (
+        <Loader />
+      ) : (
+        infoData &&
+        thickerData && (
+          <CoinDetail coinInfo={infoData} coinPrice={thickerData} />
+        )
+      )}
+      {Error && <h1>Error ....</h1>}
+    </Container>
+  );
+};
 
 const Container = styled.div`
   padding: 0px 20px;
@@ -62,7 +57,5 @@ const Container = styled.div`
 `;
 
 const CoinsList = styled.ul``;
-
-
 
 export default Coin;

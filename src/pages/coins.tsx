@@ -1,39 +1,24 @@
-import { useEffect, useState } from "react";
+import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Loader from "../components/loader";
 import { IcoinFace } from "../interface/coinFace";
-import { coinIcon, coinUrl } from "../utils/help";
+import { getAllCoins } from "../utils/api";
+import { coinIcon } from "../utils/help";
 
 const Coins = () => {
-  const [coins, setCoins] = useState<IcoinFace[]>([]);
-  const [loading, setLoading] = useState(false);
-
-  const getCoin = async () => {
-    setLoading(true);
-    try {
-      const response = await fetch(coinUrl);
-      const data = await response.json();
-      setCoins(data.slice(0, 100));
-      setLoading(false);
-    } catch {
-      console.log("Error || can't get your data");
-      setLoading(false);
-    }
-  };
-  useEffect(() => {
-    getCoin();
-  }, []);
+  const {isError,isLoading,data} = useQuery<IcoinFace[]>('allCoins', getAllCoins);
+  
   return (
     <Container>
       <header>
         <h1>코인</h1>
       </header>
-      {loading ? (
+      {isLoading ? (
         <Loader />
       ) : (
         <CoinsList>
-          {coins.map((coin) => (
+          {data?.map((coin) => (
             <Coin key={coin.id}>
               <Link to={`/${coin.id}`} state={coin.name}>
                 <img
@@ -46,6 +31,7 @@ const Coins = () => {
           ))}
         </CoinsList>
       )}
+      {isError&&<h1>ERROR .....</h1>}
     </Container>
   );
 };

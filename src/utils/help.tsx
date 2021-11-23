@@ -6,7 +6,6 @@ export const coinThickerUrl ="https://api.coinpaprika.com/v1/tickers/";
 
 export const coinPriceUrl ="https://api.coinpaprika.com/v1/coins/";
 
-
 export const numberWithCommas=(x:number)=>{
-    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return x?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }

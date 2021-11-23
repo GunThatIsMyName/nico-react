@@ -4,6 +4,7 @@ import Market from "./components/market";
 import Coin from "./pages/coin";
 import Coins from "./pages/coins";
 import GlobalStyle from "./style/reset";
+import { ReactQueryDevtools } from "react-query/devtools";
 
 function App() {
   return <BrowserRouter>
@@ -15,6 +16,7 @@ function App() {
       <Route path="market" element={<Market />} />
     </Route>
   </Routes>
+  <ReactQueryDevtools initialIsOpen={true} />
   </BrowserRouter>
 }
 
