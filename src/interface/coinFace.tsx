@@ -43,35 +43,51 @@ export interface IcoinThicker {
 }
 
 export interface IInfoData {
-    id: string;
-    symbol: string;
-    name: string;
-    rank: number;
-    is_new: boolean;
-    is_active: boolean;
-    type: string;
-    contract: string;
-    platform: string;
-    description: string;
-    message: string;
-    open_source: boolean;
-    started_at: Date;
-    development_status: string;
-    hardware_wallet: boolean;
-    proof_type: string;
-    org_structure: string;
-    hash_algorithm: string;
-  }
+  id: string;
+  symbol: string;
+  name: string;
+  rank: number;
+  is_new: boolean;
+  is_active: boolean;
+  type: string;
+  contract: string;
+  platform: string;
+  description: string;
+  message: string;
+  open_source: boolean;
+  started_at: Date;
+  development_status: string;
+  hardware_wallet: boolean;
+  proof_type: string;
+  org_structure: string;
+  hash_algorithm: string;
+}
 
 export interface IcoinProps {
-    coinInfo:{
-        rank:number;
-        symbol:string;
-        open_source:boolean;
-        description:string;
-    };
-    coinPrice:{
-        max_supply:number;
-        total_supply:number;
-    };
+  coinInfo: {
+    rank: number;
+    symbol: string;
+    open_source: boolean;
+    description: string;
+  };
+  coinPrice: {
+    max_supply: number;
+    total_supply: number;
+  };
+  coinId?: string;
 }
+
+export type chartTypeProps = {
+  close: number;
+  high: number;
+  low: number;
+  market_cap: number;
+  open: number;
+  volume: number;
+  time_close: string;
+  time_open: string;
+};
+
+export type chartProps = {
+  data: chartTypeProps;
+};

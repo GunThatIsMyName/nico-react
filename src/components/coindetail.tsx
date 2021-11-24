@@ -34,7 +34,7 @@ const CoinDetail=({coinInfo,coinPrice}:IcoinProps)=>{
                     <span>{numberWithCommas(total_supply)}</span>
                 </div>
             </div>
-            <Link to="info">info</Link>
+            <Link to="info" >info</Link>
             <br />
             <Link to="market">market</Link>
             <Outlet />

@@ -18,3 +18,12 @@ export const getCoinThicker=async(id?:string)=>{
     const data = await response.json();
     return data;
 }
+
+export const getFourteenPrice=async(id?:string)=>{
+    const currentTime = Math.floor(Date.now()/1000);
+    const startTime= currentTime - 60*60*24*7*2;
+    const url = `${coinUrl}/${id}/ohlcv/historical?start=${startTime}&end=${currentTime}`;
+    const response = await fetch(url);
+    const data = await response.json();
+    return data;
+}
